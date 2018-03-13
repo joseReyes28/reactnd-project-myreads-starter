@@ -6,6 +6,11 @@ class Books extends Component{
   static propTypes = {
     books : PropTypes.array.isRequired
   }
+
+  state = {
+    
+  }
+
   render() {
     const { books } = this.props
     return(
