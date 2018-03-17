@@ -3,12 +3,17 @@ import PropTypes from 'prop-types'
 
 class Books extends Component{
 
+
   static propTypes = {
     books : PropTypes.array.isRequired
   }
 
   state = {
-    
+
+  }
+
+  handleBookChange(event,book){
+    this.props.moveBook(book,event.target.value);
   }
 
   render() {
@@ -22,7 +27,7 @@ class Books extends Component{
             <div className="book-top">
               <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
               <div className="book-shelf-changer">
-                <select>
+                <select value={book.shelf} onChange={(event) => this.handleBookChange(event,book)}>
                   <option value="none" disabled>Move to...</option>
                   <option value="currentlyReading">Currently Reading</option>
                   <option value="wantToRead">Want to Read</option>
@@ -35,7 +40,7 @@ class Books extends Component{
             <div className="book-authors"> {book.authors} </div>
           </div>
         </li>
-      
+
       ))}
       </ol>
     </div>

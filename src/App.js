@@ -2,16 +2,17 @@ import React from 'react'
 import Shelf from './Shelf'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
+import { Route } from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
     books:[],
     shelf:[
-      {id:'currenlyReading',name:'Currenly Reading'},
+      {id:'currentlyReading',name:'Currenly Reading'},
       {id:'wantToRead',name:'Want to Read'},
       {id:'read',name:'Read'}
     ],
-    
+
     showSearchPage: false
   }
 
@@ -21,24 +22,26 @@ class BooksApp extends React.Component {
     })
   }
 
+  bookToShelf = (book,shelf) => {
+    BooksAPI.update(book,shelf).then(() => {
+      book.shelf = shelf;
+      this.setState(state => ({
+        books : this.state.books.filter( bk => bk.id !== book.id).concat([book])
+      }))
+    })
+  }
+
   render() {
     return (
       <div className="app">
-        (
-          <div className="list-books">
-            <div className="list-books-title">
-              <h1>MyReads</h1>
-            </div>
-            <div className="list-books-content">
-              <div>
-                <Shelf books={this.state.books} shelfs={this.state.shelf} />
-              </div>
-            </div>
-            <div className="open-search">
-              <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
-            </div>
-          </div>
-        }
+        <Route exact path='/' render={() => (
+            <Shelf
+              books={this.state.books}
+              shelfs={this.state.shelf}
+              moveBook={this.bookToShelf}
+              />
+          )}
+          />
       </div>
     )
   }
