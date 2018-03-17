@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Books from './Books'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 
 class Shelf extends Component{
@@ -34,6 +35,9 @@ class Shelf extends Component{
                   ))}
                 </div>
               </div>
+              <div className="open-search">
+                <Link className="close-search" to="/search">Add a book</Link>
+            </div>
             </div>
           </div>
       )
